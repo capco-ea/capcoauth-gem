@@ -14,6 +14,10 @@ module Capcoauth
         end
       end
 
+      def current_user
+        User.find session[:capcoauth_user_id] if session[:capcoauth_user_id]
+      end
+
       private
 
       def capcoauth_token
