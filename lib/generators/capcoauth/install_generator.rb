@@ -6,5 +6,6 @@ class Capcoauth::InstallGenerator < ::Rails::Generators::Base
   def install
     template 'initializer.rb', 'config/initializers/capcoauth.rb'
     route 'use_capcoauth'
+    readme 'README'
   end
 end

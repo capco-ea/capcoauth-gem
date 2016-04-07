@@ -1,0 +1,13 @@
+==========================================================================
+
+Before you can use Capcoauth, you need to enter some configuration details
+
+* Go to config/initializers/capcoauth.rb and add your client id and secret
+
+* Add `before_action :verify_authorized!` to your controllers where
+  Necessary.  This follows standard `except: [:index]` and
+  `only: [:secret]` Rails ActionController conventions
+
+Enjoy!
+
+==========================================================================
