@@ -1,5 +1,3 @@
-require 'httparty'
-
 module Capcoauth
   module OAuth
     class TokenVerifier
