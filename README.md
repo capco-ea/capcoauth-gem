@@ -38,7 +38,7 @@ by adding it as a before_action:
 
 ```ruby
 class ApplicationController < ActionController::Base
-  before_action :verify_authorized
+  before_action :verify_authorized!
 end
 ```
 
@@ -46,7 +46,7 @@ You may exclude/include for specific actions:
 
 ```ruby
 class ApplicationController < ActionController::Base
-  before_action :verify_authorized, only: [:my_super_secret_action], except: [:my_publicly_accessible_action]
+  before_action :verify_authorized!, only: [:my_super_secret_action], except: [:my_publicly_accessible_action]
 end
 ```
 
@@ -54,7 +54,7 @@ Or even skip it entirely for specific actions:
 
 ```ruby
 class PublicStuffController < ApplicationController
-  skip_before_action :verify_authorized
+  skip_before_action :verify_authorized!
 end
 ```
 
