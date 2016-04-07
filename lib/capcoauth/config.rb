@@ -1,7 +1,7 @@
 module Capcoauth
   class MissingConfiguration < StandardError
     def initialize
-      super 'Capcoauth configuration is missing.  Please ensure you have an initializer in config/capcoauth.rb'
+      super 'Capcoauth configuration is missing.  Please ensure you have an initializer in config/initializers/capcoauth.rb'
     end
   end
 
