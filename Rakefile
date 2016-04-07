@@ -10,7 +10,7 @@ RSpec::Core::RakeTask.new(:spec) do |config|
 end
 
 namespace :capcoauth do
-  # desc 'Install CapcOAuth in dummy app'
+  # desc 'Install Capcoauth in dummy app'
   # task :install do
   #   cd 'spec/dummy'
   #   system 'bundle exec rails g capcoauth:install --force'

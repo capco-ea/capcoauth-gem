@@ -1,17 +1,17 @@
 require 'capcoauth/rails/routes/mapping'
 require 'capcoauth/rails/routes/mapper'
 
-module CapcOAuth
+module Capcoauth
   module Rails
     class Routes
       module Helper
         def use_capcoauth(options = {}, &block)
-          CapcOAuth::Rails::Routes.new(self, &block).generate_routes!(options)
+          Capcoauth::Rails::Routes.new(self, &block).generate_routes!(options)
         end
       end
 
       def self.install!
-        ActionDispatch::Routing::Mapper.send :include, CapcOAuth::Rails::Routes::Helper
+        ActionDispatch::Routing::Mapper.send :include, Capcoauth::Rails::Routes::Helper
       end
 
       attr_accessor :routes
@@ -23,15 +23,15 @@ module CapcOAuth
       def generate_routes!(options)
         @mapping = Mapper.new.map(&@block)
         routes.scope options[:scope] || 'auth', as: 'auth' do
-          map_route(:login, :login_routes)
-          map_route(:logout, :logout_routes)
-          map_route(:callback, :callback_routes)
+          map_routes(:login, :login_routes)
+          map_routes(:logout, :logout_routes)
+          map_routes(:callback, :callback_routes)
         end
       end
 
       private
 
-      def map_route(name, method)
+      def map_routes(name, method)
         unless @mapping.skipped?(name)
           send method, @mapping[name]
         end

@@ -1,4 +1,4 @@
-module CapcOAuth
+module Capcoauth
   module Rails
     class Routes
       class Mapping
