@@ -4,6 +4,7 @@ require 'capcoauth/config'
 
 require 'capcoauth/oauth/access_token'
 require 'capcoauth/oauth/token_verifier'
+require 'capcoauth/oauth/ttl_cache'
 
 require 'capcoauth/helpers/controller'
 

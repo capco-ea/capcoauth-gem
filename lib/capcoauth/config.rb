@@ -66,7 +66,6 @@ module Capcoauth
 
     extend Option
 
-    # TODO: Make sure all these are used
-    option :token_verify_ttl,               default: 10
+    option :token_verify_ttl, default: 10
   end
 end
