@@ -3,10 +3,8 @@ module Capcoauth
     module Controller
       extend ActiveSupport::Concern
 
-      private
-
       def capcoauth_token
-        @token ||= OAuth::AccessToken.new(session[:capcoauth_access_token]).verify
+        @capcoauth_token ||= OAuth::AccessToken.new(session[:capcoauth_access_token])
       end
 
       def oauth_callback_url
