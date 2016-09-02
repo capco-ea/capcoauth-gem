@@ -16,7 +16,7 @@ Gem::Specification.new do |s|
   # s.test_files    = `git ls-files -- spec/*`.split("\n")
   s.require_paths = ['lib']
 
-  s.add_dependency 'railties', '~> 4.2'
+  s.add_dependency 'railties', ['>= 4.2', '< 6.0']
   s.add_dependency 'httparty', '~> 0.13'
 
   s.add_development_dependency 'rake', '~> 10.5'

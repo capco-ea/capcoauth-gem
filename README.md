@@ -79,6 +79,15 @@ whatever TTL value you set in your initializer.  This saves time by preventing e
 CapcOAuth for approval.  This can be increased or decreased at your discretion, but should be kept to a relatively low
 value.
 
+## API-only applications
+
+Simply remove `use_capcoauth` from `routes.rb`, or don't add it if you created your own initializer.
+
+By default, this gem assumes you're using a normal Rails application, and thus adds `use_capcoauth` to your `routes.rb`
+file.  When `use_capcoauth` is used, it signals the gem to allow redirects and session variables whenever an HTML
+request type is detected.  For API-only applications, it will only parse the `access_token` query param and
+`Authorization` headers.
+
 ## Bugs? Feature requests? Pull requests?
 
 Email me or submit via issue/pull request.

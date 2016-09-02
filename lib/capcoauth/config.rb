@@ -16,6 +16,8 @@ module Capcoauth
   class Config
     attr_reader :client_id
     attr_reader :client_secret
+    attr_reader :logger
+    attr_accessor :using_routes
 
     class Builder
       def initialize(&block)
@@ -33,6 +35,10 @@ module Capcoauth
 
       def client_secret(client_secret)
         @config.instance_variable_set('@client_secret', client_secret)
+      end
+
+      def logger(logger)
+        @config.instance_variable_set('@logger', logger)
       end
     end
 
@@ -67,5 +73,6 @@ module Capcoauth
     extend Option
 
     option :token_verify_ttl, default: 10
+    option :capcoauth_url, default: 'https://capcoauth.capco.com'
   end
 end

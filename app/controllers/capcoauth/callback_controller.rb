@@ -3,10 +3,11 @@ require 'httparty'
 module Capcoauth
   class CallbackController < Capcoauth::ApplicationController
     def show
+
       # Abort if code not found
       return redirect_to root_url, alert: 'Authorization was canceled' unless params[:code].present?
 
-      response = HTTParty.post('https://capcoauth.capco.com/oauth/token', {
+      response = ::HTTParty.post("#{Capcoauth.configuration.capcoauth_url}/oauth/token", {
         body: {
           client_id: Capcoauth.configuration.client_id,
           client_secret: Capcoauth.configuration.client_secret,

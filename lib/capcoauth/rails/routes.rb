@@ -7,6 +7,7 @@ module Capcoauth
       module Helper
         def use_capcoauth(options = {}, &block)
           Capcoauth::Rails::Routes.new(self, &block).generate_routes!(options)
+          Capcoauth.configuration.using_routes = true
         end
       end
 

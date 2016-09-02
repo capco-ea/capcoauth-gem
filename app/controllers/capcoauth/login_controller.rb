@@ -3,12 +3,20 @@ require 'uri'
 module Capcoauth
   class LoginController < Capcoauth::ApplicationController
     def show
-      if capcoauth_token
-        redirect_to session[:previous_url].blank? ? root_url : session.delete(:previous_url), notice: 'You are already logged in'
-        return
+
+      # If set in session
+      if session[:capcoauth_access_token]
+
+        # Attempt to verify
+        begin
+          capcoauth_token.verify
+          redirect_to session.delete(:previous_url) || root_url, notice: 'You are already logged in'
+          return
+        rescue; end
       end
 
-      redirect_to "https://capcoauth.capco.com/oauth/authorize?client_id=#{Capcoauth.configuration.client_id}&redirect_uri=#{URI.encode(oauth_callback_url)}&response_type=code"
+      # Otherwise, redirect
+      redirect_to "#{Capcoauth.configuration.capcoauth_url}/oauth/authorize?client_id=#{Capcoauth.configuration.client_id}&redirect_uri=#{URI.encode(oauth_callback_url)}&response_type=code"
     end
   end
 end
