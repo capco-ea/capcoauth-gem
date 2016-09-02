@@ -3,13 +3,14 @@ module Capcoauth
     class TTLCache
       @@cache = {}
 
-      def self.valid?(access_token)
+      def self.user_id_for(access_token)
         purge
-        !!@@cache[access_token]
+        return @@cache[access_token][:user_id] if @@cache[access_token].present?
+        nil
       end
 
-      def self.update(access_token)
-        @@cache[access_token] = Time.zone.now
+      def self.update(access_token, user_id)
+        @@cache[access_token] = { last_checked: Time.zone.now, user_id: user_id }
       end
 
       def self.remove(access_token)
@@ -18,7 +19,7 @@ module Capcoauth
 
       def self.purge
         @@cache.delete_if do |k, v|
-          Time.zone.now > v + Capcoauth.configuration.token_verify_ttl
+          Time.zone.now > v[:last_checked] + Capcoauth.configuration.token_verify_ttl
         end
       end
     end

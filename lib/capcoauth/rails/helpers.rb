@@ -29,7 +29,8 @@ module Capcoauth
       end
 
       def current_user
-        @user ||= User.find_by_id verify_authorized!
+        verify_authorized!
+        @current_user ||= User.find_by_id @current_user_id
       end
 
       protected

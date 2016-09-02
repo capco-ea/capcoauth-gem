@@ -6,6 +6,7 @@ module Capcoauth
 
       def initialize(token)
         @token = token
+        @user_id = TTLCache.user_id_for(token)
       end
 
       def verify
