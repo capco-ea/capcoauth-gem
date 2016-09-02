@@ -12,7 +12,7 @@ module Capcoauth
         return @@bearer_token if @@bearer_token.present?
 
         res = self.post(
-          '/oauth/token',
+          "#{Capcoauth.configuration.capcoauth_url}/oauth/token",
           {
             body: {
               grant_type: 'client_credentials',
@@ -56,7 +56,7 @@ module Capcoauth
         }
         body[:data][:attributes][:environment] = environment if device_type == 'ios'
         res = self.post(
-          '/api/v1/user_devices',
+          "#{Capcoauth.configuration.capcoauth_url}/api/v1/user_devices",
           {
             body: body.to_json,
             headers: default_headers
@@ -69,14 +69,14 @@ module Capcoauth
       end
 
       def remove_device_token(device_token)
-        res = self.delete("/api/v1/user_devices/#{device_token}", headers: default_headers)
+        res = self.delete("#{Capcoauth.configuration.capcoauth_url}/api/v1/user_devices/#{device_token}", headers: default_headers)
         @@bearer_token = nil if res.code == 401
         res.code == 204
       end
 
       def notify(user_id, alert=nil, badge=nil, data=nil)
         res = self.post(
-          '/api/v1/user_notifications',
+          "#{Capcoauth.configuration.capcoauth_url}/api/v1/user_notifications",
           {
             body: {
               data: {
