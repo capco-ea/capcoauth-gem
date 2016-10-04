@@ -12,7 +12,7 @@ module Capcoauth
           session.delete(:previous_url)
         end
 
-        @current_user_id ||= capcoauth_token.user_id
+        @capcoauth_user_id ||= capcoauth_token.user_id
       rescue OAuth::TokenVerifier::UnauthorizedError
         if handle_sessions?
           session[:previous_url] = request.url
@@ -30,7 +30,17 @@ module Capcoauth
 
       def current_user
         verify_authorized!
-        @current_user ||= User.find_by_id @current_user_id
+
+        # Resolve user ID using configuration resolver unless already found
+        unless @current_user
+          begin
+            @current_user = Capcoauth.configuration.user_resolver.call(@capcoauth_user_id)
+          rescue ActiveRecord::RecordNotFound => e
+            Capcoauth.configuration.logger.warn "[CapcOAuth] Error looking up user - #{e.message}"
+          end
+        end
+
+        @current_user
       end
 
       protected

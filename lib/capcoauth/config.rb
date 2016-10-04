@@ -74,5 +74,10 @@ module Capcoauth
 
     option :token_verify_ttl, default: 10
     option :capcoauth_url, default: 'https://capcoauth.capco.com'
+    option :user_id_field, default: :capcoauth
+    option :user_resolver, default: (lambda do |capcoauth_user_id|
+      Capcoauth.configuration.logger.warn('[CapcOAuth] User resolver is not configured. Please specify a block in configuration to resolve the proper user')
+      nil
+    end)
   end
 end

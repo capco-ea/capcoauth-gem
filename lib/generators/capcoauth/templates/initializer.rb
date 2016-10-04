@@ -18,4 +18,13 @@ Capcoauth.configure do |config|
 
   # Configure the logger to use for OAuth events
   config.logger Rails.logger
+
+  # Configure which ID to identify the user by.  Valid options are :capcoauth, :capco (4-letter), :psoft, :e_number, and :cit
+  # config.user_id_field :capcoauth
+
+  # Block to resolve your user from the provided CapcOAuth ID.  If you're using different primary keys than any of the
+  # existing services, you might consider looking up by an external ID, e.g. `User.find_by_psoft_id! capcoauth_user_id`
+  config.user_resolver do |capcoauth_user_id|
+    User.find capcoauth_user_id
+  end
 end
