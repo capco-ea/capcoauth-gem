@@ -13,6 +13,9 @@ Capcoauth.configure do |config|
   # application will continue to serve requests to users even after the token is revoked
   # config.token_verify_ttl 10
 
+  # Configure a cache store to use to cache access token resolutions.
+  # config.cache_store ActiveSupport::Cache::MemoryStore.new
+
   # Configure CapcOAuth service URL
   # config.capcoauth_url ENV['CAPCOAUTH_URL']
 
