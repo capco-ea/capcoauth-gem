@@ -74,7 +74,8 @@ module Capcoauth
         res.code == 204
       end
 
-      def notify(user_id, alert=nil, badge=nil, data=nil)
+      def notify(user_id, alert=nil, badge=nil, data={})
+        data = JSON.generate data
         res = self.post(
           "#{Capcoauth.configuration.capcoauth_url}/api/v1/user_notifications",
           {
