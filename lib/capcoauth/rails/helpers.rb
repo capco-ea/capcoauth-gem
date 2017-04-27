@@ -43,6 +43,10 @@ module Capcoauth
         @current_user
       end
 
+      def capcoauth_token
+        @_capcoauth_token ||= OAuth::AccessToken.new(token_from_request)
+      end
+
       protected
 
         def handle_unauthorized
@@ -58,10 +62,6 @@ module Capcoauth
         end
 
       private
-
-        def capcoauth_token
-          @_capcoauth_token ||= OAuth::AccessToken.new(token_from_request)
-        end
 
         def token_from_request
           token_from_param || token_from_session || token_from_headers
