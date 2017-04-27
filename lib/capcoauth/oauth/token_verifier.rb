@@ -21,6 +21,9 @@ module Capcoauth
         # Set the user_id from the token response
         if response.code == 200
 
+          # Detect application credentials
+          application_credentials = response.parsed_response['resource_owner_id'].blank?
+
           # Get the proper ID value field from the response
           user_id_field = Capcoauth.configuration.user_id_field
           if user_id_field == :capcoauth
@@ -30,7 +33,7 @@ module Capcoauth
           end
 
           # Throw unauthorized if ID of specified type doesn't exist
-          unless access_token.user_id
+          if access_token.user_id.blank? and !application_credentials
             logger.info("CapcOAuth: The access token for #{user_id_field} user ##{access_token.user_id} did not have an ID for type `#{user_id_field}`") unless logger.nil?
             raise UnauthorizedError
           end
