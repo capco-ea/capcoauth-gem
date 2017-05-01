@@ -19,13 +19,13 @@ module Capcoauth
           session.delete(:capcoauth_access_token)
           session.delete(:capcoauth_user_id)
         end
-        handle_unauthorized
+        handle_unauthorized unless performed?
       rescue OAuth::TokenVerifier::OtherError
         if handle_sessions?
           session.delete(:capcoauth_access_token)
           session.delete(:capcoauth_user_id)
         end
-        handle_internal_server_error
+        handle_internal_server_error unless performed?
       end
 
       def current_user
