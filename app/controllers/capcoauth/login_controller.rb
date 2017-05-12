@@ -10,7 +10,11 @@ module Capcoauth
         # Attempt to verify
         begin
           capcoauth_token.verify
-          redirect_to session.delete(:previous_url) || root_url, notice: 'You are already logged in'
+          if Capcoauth.configuration.perform_login_redirects
+            redirect_to session.delete(:previous_url) || root_url, notice: 'You are already logged in'
+          else
+            redirect_to root_url, notice: 'You are already logged in'
+          end
           return
         rescue; end
       end

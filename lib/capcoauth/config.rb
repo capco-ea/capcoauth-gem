@@ -2,8 +2,8 @@ require 'active_support/cache'
 
 module Capcoauth
   class MissingConfiguration < StandardError
-    def initialize
-      super 'Capcoauth configuration is missing.  Please ensure you have an initializer in config/initializers/capcoauth.rb'
+    def message
+      'Capcoauth configuration is missing.  Please ensure you have an initializer in config/initializers/capcoauth.rb'
     end
   end
 
@@ -74,13 +74,15 @@ module Capcoauth
 
     extend Option
 
+    option :perform_login_redirects, default: true
     option :token_verify_ttl, default: 10
     option :capcoauth_url, default: 'https://capcoauth.capco.com'
     option :user_id_field, default: :capcoauth
     option :cache_store, default: ::ActiveSupport::Cache::MemoryStore.new
-    option :user_resolver, default: (lambda do |capcoauth_user_id|
-      Capcoauth.configuration.logger.warn('[CapcOAuth] User resolver is not configured. Please specify a block in configuration to resolve the proper user')
+    option :user_resolver, default: -> capcoauth_user_id {
+      Capcoauth.configuration.logger.fatal '[CapcOAuth] User resolver is not configured. Please specify a block in configuration to resolve the proper user'
       nil
-    end)
+    }
+    option :require_user, default: true
   end
 end
