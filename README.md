@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
 end
 ```
 
-Or even skip it entirely for specific actions:
+Or even skip it entirely for specific controllers:
 
 ```ruby
 class PublicStuffController < ApplicationController
