@@ -1,13 +1,10 @@
 Capcoauth.configure do |config|
 
-  raise 'CapcOAuth Client ID not found' if ENV['CAPCOAUTH_CLIENT_ID'].nil?
-  raise 'CapcOAuth Client secret not found' if ENV['CAPCOAUTH_CLIENT_SECRET'].nil?
-
   # CapcOAuth Client ID
-  # config.client_id = ENV['CAPCOAUTH_CLIENT_ID']
+  config.client_id = 'client_id_123'
 
   # CapcOAuth Client Secret
-  # config.client_secret = ENV['CAPCOAUTH_CLIENT_SECRET']
+  config.client_secret = 'client_secret_456'
 
   # Configures how often to check CapcOAuth for access token validity, in seconds.  If this value is too high,
   # application will continue to serve requests to users after the token is revoked

@@ -10,7 +10,6 @@ module Capcoauth
       end
 
       def verify
-        nil unless @token
         TokenVerifier.verify(self)
       end
     end

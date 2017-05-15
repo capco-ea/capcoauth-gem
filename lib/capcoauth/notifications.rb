@@ -6,10 +6,12 @@ module Capcoauth
 
     class << self
 
-      @@bearer_token = nil
+      def store
+        Capcoauth.configuration.cache_store
+      end
 
       def bearer_token
-        return @@bearer_token if @@bearer_token.present?
+        return store.fetch('application_token') if store.fetch('application_token').present?
 
         res = self.post(
           "#{Capcoauth.configuration.capcoauth_url}/oauth/token",
@@ -24,15 +26,15 @@ module Capcoauth
           }
         )
         if res.ok? and res.parsed_response['access_token']
-          @@bearer_token = res.parsed_response['access_token']
+          store.write('application_token', res.parsed_response['access_token'], expires_in: res.parsed_response['expires_in'])
         end
-        @@bearer_token
+        store.fetch('application_token')
       end
 
       def default_headers
         {
-          'Authorization' => "Bearer #{bearer_token}",
-          'Content-Type' => 'application/vnd.api+json'
+          'Authorization': "Bearer #{bearer_token}",
+          'Content-Type': 'application/vnd.api+json'
         }
       end
 
@@ -62,7 +64,7 @@ module Capcoauth
             headers: default_headers
           }
         )
-        @@bearer_token = nil if res.code == 401
+        store.delete('application_token') if res.code == 401
         return true if res.created?
         return true if res.body.include? 'has already been registered'
         false
@@ -70,7 +72,7 @@ module Capcoauth
 
       def remove_device_token(device_token)
         res = self.delete("#{Capcoauth.configuration.capcoauth_url}/api/v1/user_devices/#{device_token}", headers: default_headers)
-        @@bearer_token = nil if res.code == 401
+        store.delete('application_token') if res.code == 401
         res.code == 204
       end
 
@@ -100,7 +102,7 @@ module Capcoauth
             headers: default_headers
           }
         )
-        @@bearer_token = nil if res.code == 401
+        store.delete('application_token') if res.code == 401
         return true if res.created?
         false
       end

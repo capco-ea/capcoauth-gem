@@ -12,11 +12,4 @@ require 'capcoauth/rails/routes'
 require 'capcoauth/rails/helpers'
 
 module Capcoauth
-  def self.configured?
-    @config.present?
-  end
-
-  def self.installed?
-    configured?
-  end
 end
