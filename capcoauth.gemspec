@@ -12,8 +12,8 @@ Gem::Specification.new do |s|
   s.description = 'capcoauth-gem is a library to integrate Rails applications with Capcoauth authentication service'
   s.license     = 'MIT'
 
-  s.files         = `git ls-files`.split('\n')
-  s.test_files    = `git ls-files -- spec/*`.split('\n')
+  s.files         = `git ls-files`.split("\n")
+  s.test_files    = `git ls-files -- spec/*`.split("\n")
   s.require_paths = ['lib']
   
   s.required_ruby_version = '>= 2.1'
