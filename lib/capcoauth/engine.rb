@@ -1,7 +1,7 @@
 module Capcoauth
   class Engine < Rails::Engine
     initializer 'capcoauth.params.filter' do |app|
-      parameters = %w'code access_token'
+      parameters = %w(client_secret code authentication_token access_token refresh_token)
       app.config.filter_parameters << /^(#{Regexp.union parameters})$/
     end
 
