@@ -40,7 +40,7 @@ module Capcoauth
         raise Capcoauth::AuthorizationError, reason if error == :unauthorized_error
 
         # Raise an error if token has an ID but the user wasn't found
-        if Capcoauth.configuration.require_user and token.user_id.present? and current_user.blank?
+        if Capcoauth.configuration.require_user and token.present? and token.user_id.present? and current_user.blank?
           Capcoauth.configuration.logger.info "[CapcOAuth] Error looking up user: Token returned ID ##{token.user_id} but resolver didn't return user"
           raise Capcoauth::AuthorizationError, 'Your credentials were valid, but you aren\'t currently active in this system'
         end
