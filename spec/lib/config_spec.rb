@@ -212,4 +212,16 @@ describe Capcoauth::Config do
       subject.require_user = true
     end
   end
+
+  describe 'send_notifications' do
+    it 'has value true by default' do
+      expect(subject.send_notifications).to be_truthy
+    end
+    it 'can be updated to false' do
+      subject.require_user = false
+      expect(subject.send_notifications).to be_falsey
+      subject.require_user = true
+      expect(subject.send_notifications).to be_truthy
+    end
+  end
 end

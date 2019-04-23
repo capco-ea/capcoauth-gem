@@ -41,4 +41,7 @@ Capcoauth.configure do |config|
 
   # Don't redirect to last URL on login since we don't want to see API responses
   # config.perform_login_redirects = true
+
+  # Send push notifications (good to make this dependent on your environment)
+  # config.send_notifications = true
 end

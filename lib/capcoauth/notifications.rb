@@ -33,8 +33,8 @@ module Capcoauth
 
       def default_headers
         {
-          'Authorization': "Bearer #{bearer_token}",
-          'Content-Type': 'application/vnd.api+json'
+          :'Authorization' => "Bearer #{bearer_token}",
+          :'Content-Type'=>'application/vnd.api+json'
         }
       end
 
@@ -77,6 +77,8 @@ module Capcoauth
       end
 
       def notify(user_id, alert=nil, badge=nil, data={})
+        return false unless Capcoauth.configuration.send_notifications
+
         data = JSON.generate data
         res = self.post(
           "#{Capcoauth.configuration.capcoauth_url}/api/v1/user_notifications",

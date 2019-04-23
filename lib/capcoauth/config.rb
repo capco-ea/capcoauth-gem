@@ -20,7 +20,7 @@ module Capcoauth
 
   class Config
     CAPCOAUTH_URL_DEFAULT = 'https://capcoauth.capco.com'.freeze
-    TOKEN_VERIFY_TTL_DEFAULT = 10.freeze
+    TOKEN_VERIFY_TTL_DEFAULT = 60.freeze
 
     class Builder
       def initialize(&block)
@@ -35,6 +35,7 @@ module Capcoauth
         @config.user_id_field = :capcoauth
         @config.cache_store = ::ActiveSupport::Cache::MemoryStore.new
         @config.require_user = true
+        @config.send_notifications = false
 
         # Evaluate configuration block
         @config.instance_eval(&block)
@@ -53,7 +54,8 @@ module Capcoauth
                   :user_id_field,
                   :cache_store,
                   :user_resolver,
-                  :require_user
+                  :require_user,
+                  :send_notifications
 
     def client_id
       @client_id || raise(MissingRequiredOptionError, 'Missing required option `client_id`')
