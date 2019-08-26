@@ -119,11 +119,11 @@ describe Capcoauth::Config do
 
   describe 'using_routes' do
     it 'has value false by default' do
-      expect(subject.using_routes).to be_falsey
+      expect(subject.using_routes).to eq(false)
     end
     it 'can be updated to true' do
       subject.using_routes = true
-      expect(subject.using_routes).to be_truthy
+      expect(subject.using_routes).to eq(true)
       subject.using_routes = false
     end
     it 'is updated to true by Rails.application.routes.draw' do
@@ -132,17 +132,17 @@ describe Capcoauth::Config do
       Rails.application.routes.draw do
         use_capcoauth
       end
-      expect(subject.using_routes).to be_truthy
+      expect(subject.using_routes).to eq(true)
     end
   end
 
   describe 'perform_login_redirects' do
     it 'has value true by default' do
-      expect(subject.perform_login_redirects).to be_truthy
+      expect(subject.perform_login_redirects).to eq(true)
     end
     it 'can be updated to false' do
       subject.perform_login_redirects = false
-      expect(subject.perform_login_redirects).to be_falsey
+      expect(subject.perform_login_redirects).to eq(false)
       subject.perform_login_redirects = true
     end
   end
@@ -203,25 +203,25 @@ describe Capcoauth::Config do
   end
 
   describe 'require_user' do
-    it 'has value true by default' do
-      expect(subject.require_user).to be_truthy
+    it 'has value false by default' do
+      expect(subject.require_user).to eq(true)
     end
     it 'can be updated to false' do
       subject.require_user = false
-      expect(subject.require_user).to be_falsey
+      expect(subject.require_user).to eq(false)
       subject.require_user = true
     end
   end
 
   describe 'send_notifications' do
-    it 'has value true by default' do
-      expect(subject.send_notifications).to be_truthy
+    it 'has value false by default' do
+      expect(subject.send_notifications).to eq(false)
     end
-    it 'can be updated to false' do
-      subject.require_user = false
-      expect(subject.send_notifications).to be_falsey
-      subject.require_user = true
-      expect(subject.send_notifications).to be_truthy
+    it 'can be updated to true' do
+      subject.send_notifications = true
+      expect(subject.send_notifications).to eq(true)
+      subject.send_notifications = false
+      expect(subject.send_notifications).to eq(false)
     end
   end
 end

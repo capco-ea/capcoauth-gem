@@ -7,7 +7,6 @@ TABLE_NAME_SUFFIX = ENV['table_name_suffix'] || nil
 
 $LOAD_PATH.unshift File.dirname(__FILE__)
 
-require 'capybara/rspec'
 require 'dummy/config/environment'
 require 'rspec/rails'
 require 'generator_spec/test_case'
