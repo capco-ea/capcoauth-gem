@@ -18,13 +18,13 @@ Gem::Specification.new do |s|
   
   s.required_ruby_version = '>= 2.1'
 
-  s.add_dependency 'railties', ['>= 4.2', '< 6.1']
+  s.add_dependency 'railties', ['>= 4.2', '< 7.0']
   s.add_dependency 'activesupport', '>= 3.0'
-  s.add_dependency 'httparty', '~> 0.17'
+  s.add_dependency 'httparty', '~> 0.17.3'
 
-  s.add_development_dependency 'database_cleaner', '~> 1.5.3'
-  s.add_development_dependency 'generator_spec', '~> 0.9.3'
-  s.add_development_dependency 'rake', '>= 11.3.0'
+  s.add_development_dependency 'database_cleaner', '~> 1.7.0'
+  s.add_development_dependency 'generator_spec', '~> 0.9.4'
+  s.add_development_dependency 'rake', '>= 13.0.1'
   s.add_development_dependency 'rspec-rails'
-  s.add_development_dependency 'timecop', '~> 0.8.1'
+  s.add_development_dependency 'timecop', '~> 0.9.1'
 end

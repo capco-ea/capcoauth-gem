@@ -203,7 +203,7 @@ describe Capcoauth::Config do
   end
 
   describe 'require_user' do
-    it 'has value false by default' do
+    it 'has value true by default' do
       expect(subject.require_user).to eq(true)
     end
     it 'can be updated to false' do
@@ -217,11 +217,11 @@ describe Capcoauth::Config do
     it 'has value false by default' do
       expect(subject.send_notifications).to eq(false)
     end
-    it 'can be updated to true' do
-      subject.send_notifications = true
-      expect(subject.send_notifications).to eq(true)
+    it 'can be updated to false' do
       subject.send_notifications = false
       expect(subject.send_notifications).to eq(false)
+      subject.send_notifications = true
+      expect(subject.send_notifications).to eq(true)
     end
   end
 end
