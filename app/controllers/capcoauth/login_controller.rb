@@ -20,7 +20,12 @@ module Capcoauth
       end
 
       # Otherwise, redirect
-      redirect_to "#{Capcoauth.configuration.capcoauth_url}/oauth/authorize?client_id=#{Capcoauth.configuration.client_id}&redirect_uri=#{URI.encode(oauth_callback_url)}&response_type=code"
+      params = {
+        client_id: Capcoauth.configuration.client_id,
+        redirect_uri: oauth_callback_url,
+        response_type: 'code',
+      }
+      redirect_to "#{Capcoauth.configuration.capcoauth_url}/oauth/authorize?#{params.to_param}"
     end
   end
 end
