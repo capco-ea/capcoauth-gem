@@ -1,8 +1,8 @@
 module Capcoauth
   class LogoutController < Capcoauth::ApplicationController
     def show
-      session.delete(:capcoauth_user_id)
-      token = session.delete(:capcoauth_access_token)
+      token = session[:capcoauth_access_token]
+      session.destroy
       OAuth::TTLCache.remove(token) if token.present?
       redirect_to root_url, notice: 'You have been logged out'
     end

@@ -14,5 +14,15 @@ module Capcoauth
     def oauth_callback_url
       "#{root_url}auth/callback"
     end
+
+    protected
+
+    def rotate_session_id
+      session_data = session.to_h
+      reset_session
+      session_data.each do |k, v|
+        session[k] = v
+      end
+    end
   end
 end

@@ -23,6 +23,7 @@ module Capcoauth
         @access_token = OAuth::AccessToken.new(response.parsed_response['access_token']).verify
 
         if @access_token
+          rotate_session_id
           session[:capcoauth_access_token] = @access_token.token
           session[:capcoauth_user_id] = @access_token.user_id
           redirect_to session[:previous_url].blank? ? root_url : session.delete(:previous_url)
