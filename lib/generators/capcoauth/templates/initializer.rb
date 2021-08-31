@@ -44,4 +44,8 @@ Capcoauth.configure do |config|
 
   # Send push notifications (good to make this dependent on your environment)
   # config.send_notifications = true
+
+  # HTTP method to be used for logout (available options are :GET, :PUT, :PATCH, :POST, :DELETE)
+  # TODO: :POST should be used if possible, this is :GET by default because it would introduce a breaking change
+  # config.logout_method = :GET
 end

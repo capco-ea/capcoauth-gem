@@ -36,6 +36,7 @@ module Capcoauth
         @config.cache_store = ::ActiveSupport::Cache::MemoryStore.new
         @config.require_user = true
         @config.send_notifications = false
+        @config.logout_method = :GET
 
         # Evaluate configuration block
         @config.instance_eval(&block)
@@ -55,7 +56,8 @@ module Capcoauth
                   :cache_store,
                   :user_resolver,
                   :require_user,
-                  :send_notifications
+                  :send_notifications,
+                  :logout_method
 
     def client_id
       @client_id || raise(MissingRequiredOptionError, 'Missing required option `client_id`')

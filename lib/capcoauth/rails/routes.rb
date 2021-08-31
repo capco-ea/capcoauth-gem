@@ -51,8 +51,8 @@ module Capcoauth
         routes.resource(
           :logout,
           path: 'logout',
-          only: [:show, :delete], as: mapping[:as],
-          controller: mapping[:controllers]
+          only: [:create, :update, :show, :delete], as: mapping[:as],
+          controller: mapping[:controllers],
         )
       end
 
