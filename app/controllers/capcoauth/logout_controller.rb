@@ -13,7 +13,7 @@ module Capcoauth
 
       # If request JSON, just return the url in a JSON hash
       logout_url = "#{Capcoauth.configuration.capcoauth_url}/users/sign_out"
-      if request.format.json?
+      if request.format.json? || request.format.api_json?
         render json: { logout_url: logout_url }
       else
         redirect_to logout_url, notice: 'You have been logged out'
