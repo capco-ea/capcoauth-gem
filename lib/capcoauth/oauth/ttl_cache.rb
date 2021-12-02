@@ -11,7 +11,7 @@ module Capcoauth
       end
 
       def self.remove(access_token)
-        store.delete(key_for(access_token))
+        store.delete_matched(key_for(access_token))
       end
 
       def self.key_for(access_token)
