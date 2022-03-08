@@ -65,10 +65,10 @@ describe Capcoauth::OAuth::TTLCache do
       expect(subject.update('abc', '123')).to be true
       expect(subject.remove('abc')).to be true
     end
-    it 'returns true when value is expired and false after removed' do
+    it 'returns false when value is expired and false after removed' do
       expect(subject.update('abc', '123')).to be true
       Timecop.freeze(Time.zone.now + (Capcoauth.configuration.token_verify_ttl + 1).seconds) do
-        expect(subject.remove('abc')).to be true
+        expect(subject.remove('abc')).to be false
         expect(subject.remove('abc')).to be false
       end
     end
