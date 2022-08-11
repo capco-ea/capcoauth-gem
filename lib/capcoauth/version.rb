@@ -5,7 +5,7 @@ module Capcoauth
 
   module VERSION
     MAJOR = 0
-    MINOR = 8
+    MINOR = 9
     PATCH  = 0
 
     STRING = [MAJOR, MINOR, PATCH].compact.join(".")
