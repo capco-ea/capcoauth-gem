@@ -6,6 +6,7 @@ module Capcoauth
 
       class UnauthorizedError < StandardError; end
       class OtherError < StandardError; end
+      class ServerUnavailableError < StandardError; end
 
       def self.verify(access_token)
         raise UnauthorizedError, 'Please log in to continue' if access_token.blank? or access_token.token.blank?
@@ -19,8 +20,8 @@ module Capcoauth
               :'Authorization' => "Bearer #{access_token.token}"
             }
           })
-        rescue Net::OpenTimeout
-          raise OtherError, 'An error occurred while verifying your credentials (server not available)'
+        rescue SocketError, Net::OpenTimeout
+          raise ServerUnavailableError, 'An error occurred while verifying your credentials (server not available)'
         end
 
         # Set the user_id from the token response
