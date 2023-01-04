@@ -1,7 +1,5 @@
 # capcoauth-gem
 
-![Travis Build status](https://travis-ci.org/arcreative/capcoauth-gem.svg?branch=master)
-
 Ruby Gem for integrating a Rails project with CapcOAuth
 
 Currently, this only supports session-based authentication, but can easily be adapted to accept bearer tokens if needed.
