@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'railties', ['>= 4.2', '< 8.0']
   s.add_dependency 'activesupport', '>= 3.0'
-  s.add_dependency 'httparty', '~> 0.20.0'
+  s.add_dependency 'httparty', '~> 0.21.0'
 
   s.add_development_dependency 'database_cleaner', '~> 2.0.1'
   s.add_development_dependency 'generator_spec', '~> 0.9.4'
