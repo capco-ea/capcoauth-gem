@@ -38,7 +38,7 @@ describe Capcoauth::OAuth::TokenVerifier do
       httparty_double = class_double('HTTParty').as_stubbed_const
       expect(httparty_double).to receive(:get).and_raise(Net::OpenTimeout)
       token = Capcoauth::OAuth::AccessToken.new('iamnew')
-      expect{subject.verify(token)}.to raise_error(Capcoauth::OAuth::TokenVerifier::OtherError, 'An error occurred while verifying your credentials (server not available)')
+      expect{subject.verify(token)}.to raise_error(Capcoauth::OAuth::TokenVerifier::ServerUnavailableError, 'An error occurred while verifying your credentials (server not available)')
     end
 
     it 'calls HTTParty.get and raises UnauthorizedError if ID type is not returned' do
