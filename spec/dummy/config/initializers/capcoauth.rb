@@ -30,9 +30,11 @@ Capcoauth.configure do |config|
   # doesn't exist locally.  Application credentials (token without a user_id) will still be allowed regardless.
   # config.require_user = true
 
-  # Use CapcOAuth URL from config
-  # config.capcoauth_url = ENV['CAPCOAUTH_URL']
-
   # Don't redirect to last URL on login since we don't want to see API responses
   # config.perform_login_redirects = true
+
+  # Use this option if you want to send requests to the OAuth server with `X-Forwareded-Proto: https` header. This needs
+  # to be done in k8s between services on the same cluster where transmission is encrypted, but the service itself is
+  # not TLS-terminated
+  # config.force_https_requests = false
 end

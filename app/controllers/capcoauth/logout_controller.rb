@@ -37,11 +37,15 @@ module Capcoauth
       auth_value = Base64.encode64("#{Capcoauth.configuration.client_id}:#{Capcoauth.configuration.client_secret}").squish
       uri = URI.parse(Capcoauth.configuration.capcoauth_url)
       http = Net::HTTP.new(uri.host, uri.port)
-      http.use_ssl = true # Just going hardcode this to true since we definitely shouldn't be hitting this endpoint without TLS
+      # Note: We're assuming that if you're forcing `X-Forwarded-Proto: https` header, it's because you're doing it as
+      # a non-TLS request from behind a load balancer. Therefore, the connection should not be secured. DO NOT DO THIS
+      # if communication is not encrypted.
+      http.use_ssl = !Capcoauth.configuration.force_https_requests
       req = Net::HTTP::Post.new('/oauth/revoke', {
         'Authorization' => "Basic #{auth_value}",
         'Content-Type' => 'application/json',
-      })
+        'X-Forwarded-Proto' => Capcoauth.configuration.force_https_requests ? 'https' : nil,
+      }.compact)
       req.body = { token: token }.to_json
       res = http.request(req)
       Capcoauth.configuration.logger.info("Revoke request completed with status #{res.code}")

@@ -35,6 +35,7 @@ module Capcoauth
         @config.cache_store = ::ActiveSupport::Cache::MemoryStore.new
         @config.require_user = true
         @config.logout_method = :POST
+        @config.force_https_requests = false
 
         # Evaluate configuration block
         @config.instance_eval(&block)
@@ -53,7 +54,8 @@ module Capcoauth
                   :cache_store,
                   :user_resolver,
                   :require_user,
-                  :logout_method
+                  :logout_method,
+                  :force_https_requests
 
     def client_id
       @client_id || raise(MissingRequiredOptionError, 'Missing required option `client_id`')

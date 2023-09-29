@@ -17,8 +17,9 @@ module Capcoauth
           response = ::HTTParty.get("#{Capcoauth.configuration.capcoauth_url}/oauth/token/info", {
             timeout: 5,
             headers: {
-              :'Authorization' => "Bearer #{access_token.token}"
-            }
+              :'Authorization' => "Bearer #{access_token.token}",
+              :'X-Forwarded-Proto' => Capcoauth.configuration.force_https_requests ? 'https' : nil,
+            }.compact
           })
         rescue SocketError, Net::OpenTimeout
           raise ServerUnavailableError, 'An error occurred while verifying your credentials (server not available)'

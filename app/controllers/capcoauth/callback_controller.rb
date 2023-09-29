@@ -14,7 +14,10 @@ module Capcoauth
           code: params[:code],
           grant_type: 'authorization_code',
           redirect_uri: oauth_callback_url
-        }
+        },
+        headers: {
+          'X-Forwarded-Proto' => Capcoauth.configuration.force_https_requests ? 'https' : nil,
+        }.compact
       })
 
       error_message = 'There was an error logging you in'
