@@ -12,13 +12,15 @@ module Capcoauth
         raise UnauthorizedError, 'Please log in to continue' if access_token.blank? or access_token.token.blank?
         return access_token if TTLCache.user_id_for(access_token.token)
 
-        # Call Capcoauth
+        # Call OAuth Service
         begin
-          response = ::HTTParty.get("#{Capcoauth.configuration.capcoauth_url}/oauth/token/info", {
+          response = ::HTTParty.get("#{Capcoauth.configuration.capcoauth_backend_url}/oauth/token/info", {
             timeout: 5,
             headers: {
-              :'Authorization' => "Bearer #{access_token.token}"
-            }
+              'Authorization': "Bearer #{access_token.token}",
+              'X-Forwarded-Proto': Capcoauth.configuration.force_backend_https_requests ? 'https' : nil,
+              'Host': Capcoauth.configuration.force_backend_host_header,
+            }.compact
           })
         rescue SocketError, Net::OpenTimeout
           raise ServerUnavailableError, 'An error occurred while verifying your credentials (server not available)'
@@ -27,30 +29,16 @@ module Capcoauth
         # Set the user_id from the token response
         if response.code == 200
 
-          # Detect application credentials
-          application_credentials = response.parsed_response['resource_owner_id'].blank?
-
           # Get the proper ID value field from the response
-          user_id_field = Capcoauth.configuration.user_id_field
-          if user_id_field == :capcoauth
-            access_token.user_id = response.parsed_response['resource_owner_id']
-          else
-            access_token.user_id = response.parsed_response['external_ids'][user_id_field.to_s]
-          end
-
-          # Throw unauthorized if ID of specified type doesn't exist
-          if access_token.user_id.blank? and !application_credentials
-            logger.info("CapcOAuth: The access token for #{user_id_field} user ##{access_token.user_id} did not have an ID for type `#{user_id_field}`") unless logger.nil?
-            raise UnauthorizedError, 'The system cannot recognize you by that ID type'
-          end
+          access_token.user_id = response.parsed_response['resource_owner_id']
 
           # Verify token is for correct application/client
           if response.parsed_response.fetch('application', {}).fetch('uid', nil) === Capcoauth.configuration.client_id
-            logger.info("CapcOAuth: The access token for #{user_id_field} user ##{access_token.user_id} was verified successfully") unless logger.nil?
+            logger.info("CapcOAuth: The access token for user ##{access_token.user_id} was verified successfully") unless logger.nil?
             TTLCache.update(access_token.token, access_token.user_id)
             access_token
           else
-            logger.info("CapcOAuth: The access token for #{user_id_field} user ##{access_token.user_id} was valid, but for a different OAuth client ID") unless logger.nil?
+            logger.info("CapcOAuth: The access token for user ##{access_token.user_id} was valid, but for a different OAuth client ID") unless logger.nil?
             raise UnauthorizedError, 'Your credentials are valid, but are not for use with this system'
           end
         elsif response.code == 401

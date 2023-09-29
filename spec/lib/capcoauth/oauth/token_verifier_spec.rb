@@ -42,18 +42,6 @@ describe Capcoauth::OAuth::TokenVerifier do
     end
 
     it 'calls HTTParty.get and raises UnauthorizedError if ID type is not returned' do
-      Capcoauth.configuration.user_id_field = :psoft
-      httparty_double = class_double('HTTParty').as_stubbed_const
-      expect(httparty_double).to receive(:get).and_return(MockHttpResponse.new(code: 200, body: {
-        'resource_owner_id' => '123',
-        'external_ids' => {}
-      }))
-      token = Capcoauth::OAuth::AccessToken.new('iamnew')
-      expect{subject.verify(token)}.to raise_error(Capcoauth::OAuth::TokenVerifier::UnauthorizedError, 'The system cannot recognize you by that ID type')
-      Capcoauth.configuration.user_id_field = :capcoauth
-    end
-
-    it 'calls HTTParty.get and raises UnauthorizedError if ID type is not returned' do
       httparty_double = class_double('HTTParty').as_stubbed_const
       expect(httparty_double).to receive(:get).and_return(MockHttpResponse.new(code: 200, body: {
         'resource_owner_id' => '123',
@@ -97,25 +85,6 @@ describe Capcoauth::OAuth::TokenVerifier do
       expect(subject.verify(token)).to equal(token)
       expect(token.user_id).to eq('capcoauth_123')
       Capcoauth::OAuth::TTLCache.remove('capcoauth_user_token')
-    end
-
-    it 'calls HTTParty.get and returns access token with psoft id type' do
-      Capcoauth.configuration.user_id_field = :psoft
-      httparty_double = class_double('HTTParty').as_stubbed_const
-      expect(httparty_double).to receive(:get).and_return(MockHttpResponse.new(code: 200, body: {
-        'resource_owner_id' => '123',
-        'application' => {
-          'uid' => 'verifier_test_client_id'
-        },
-        'external_ids' => {
-          'psoft' => 'psoft_123'
-        }
-      }))
-      token = Capcoauth::OAuth::AccessToken.new('psoft_user_token')
-      expect(subject.verify(token)).to equal(token)
-      expect(token.user_id).to eq('psoft_123')
-      Capcoauth::OAuth::TTLCache.remove('psoft_user_token')
-      Capcoauth.configuration.user_id_field = :capcoauth
     end
   end
 end

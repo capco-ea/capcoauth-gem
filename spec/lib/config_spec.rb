@@ -169,14 +169,14 @@ describe Capcoauth::Config do
     end
   end
 
-  describe 'user_id_field' do
-    it 'has value :capcoauth by default' do
-      expect(subject.user_id_field).to eq(:capcoauth)
+  describe 'capcoauth_backend_url' do
+    it "has value #{Capcoauth::Config::CAPCOAUTH_URL_DEFAULT} by default" do
+      expect(subject.capcoauth_backend_url).to eq(Capcoauth::Config::CAPCOAUTH_URL_DEFAULT)
     end
-    it 'can be updated to false' do
-      subject.user_id_field = :psoft
-      expect(subject.user_id_field).to eq(:psoft)
-      subject.user_id_field = :capcoauth
+    it 'can be updated to other value' do
+      subject.capcoauth_backend_url = 'https://example.com'
+      expect(subject.capcoauth_backend_url).to eq('https://example.com')
+      subject.capcoauth_backend_url = Capcoauth::Config::CAPCOAUTH_URL_DEFAULT
     end
   end
 
@@ -210,18 +210,6 @@ describe Capcoauth::Config do
       subject.require_user = false
       expect(subject.require_user).to eq(false)
       subject.require_user = true
-    end
-  end
-
-  describe 'send_notifications' do
-    it 'has value false by default' do
-      expect(subject.send_notifications).to eq(false)
-    end
-    it 'can be updated to false' do
-      subject.send_notifications = false
-      expect(subject.send_notifications).to eq(false)
-      subject.send_notifications = true
-      expect(subject.send_notifications).to eq(true)
     end
   end
 end

@@ -12,7 +12,7 @@ module Capcoauth
       end
 
       # If request JSON, just return the url in a JSON hash
-      logout_url = "#{Capcoauth.configuration.capcoauth_url}/users/sign_out"
+      logout_url = "#{Capcoauth.configuration.capcoauth_url}/logout"
       if request.format.json? || request.format.api_json?
         render json: { logout_url: logout_url }
       else
@@ -35,12 +35,18 @@ module Capcoauth
     def revoke_token(token)
       Capcoauth.configuration.logger.info("Dispatching token revoke request for token #{token[0...5]}...#{token[-5..-1]}")
       auth_value = Base64.encode64("#{Capcoauth.configuration.client_id}:#{Capcoauth.configuration.client_secret}").squish
-      http = Net::HTTP.new('capcoauth.capco.com', 443)
-      http.use_ssl = true
+      uri = URI.parse(Capcoauth.configuration.capcoauth_backend_url)
+      http = Net::HTTP.new(uri.host, uri.port)
+      # Note: We're assuming that if you're forcing `X-Forwarded-Proto: https` header, it's because you're doing it as
+      # a non-TLS request from behind a load balancer. Therefore, the connection should not be secured. DO NOT DO THIS
+      # if communication is not encrypted.
+      http.use_ssl = !Capcoauth.configuration.force_backend_https_requests
       req = Net::HTTP::Post.new('/oauth/revoke', {
-        'Authorization' => "Basic #{auth_value}",
-        'Content-Type' => 'application/json',
-      })
+        'Authorization': "Basic #{auth_value}",
+        'Content-Type': 'application/json',
+        'X-Forwarded-Proto': Capcoauth.configuration.force_backend_https_requests ? 'https' : nil,
+        'Host': Capcoauth.configuration.force_backend_host_header,
+      }.compact)
       req.body = { token: token }.to_json
       res = http.request(req)
       Capcoauth.configuration.logger.info("Revoke request completed with status #{res.code}")

@@ -7,14 +7,18 @@ module Capcoauth
       # Abort if code not found
       return redirect_to root_url, alert: 'Authorization was canceled' unless params[:code].present?
 
-      response = ::HTTParty.post("#{Capcoauth.configuration.capcoauth_url}/oauth/token", {
+      response = ::HTTParty.post("#{Capcoauth.configuration.capcoauth_backend_url}/oauth/token", {
         body: {
           client_id: Capcoauth.configuration.client_id,
           client_secret: Capcoauth.configuration.client_secret,
           code: params[:code],
           grant_type: 'authorization_code',
           redirect_uri: oauth_callback_url
-        }
+        },
+        headers: {
+          'X-Forwarded-Proto': Capcoauth.configuration.force_backend_https_requests ? 'https' : nil,
+          'Host': Capcoauth.configuration.force_backend_host_header,
+        }.compact
       })
 
       error_message = 'There was an error logging you in'
