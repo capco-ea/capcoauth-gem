@@ -19,7 +19,7 @@ module Capcoauth
   end
 
   class Config
-    CAPCOAUTH_URL_DEFAULT = 'https://capcoauth.capco.com'.freeze
+    CAPCOAUTH_URL_DEFAULT = 'https://apps.capco.com'.freeze
     TOKEN_VERIFY_TTL_DEFAULT = 60.freeze
 
     class Builder
@@ -32,11 +32,9 @@ module Capcoauth
         @config.perform_login_redirects = true
         @config.token_verify_ttl = TOKEN_VERIFY_TTL_DEFAULT
         @config.capcoauth_url = CAPCOAUTH_URL_DEFAULT
-        @config.user_id_field = :capcoauth
         @config.cache_store = ::ActiveSupport::Cache::MemoryStore.new
         @config.require_user = true
-        @config.send_notifications = false
-        @config.logout_method = :GET
+        @config.logout_method = :POST
 
         # Evaluate configuration block
         @config.instance_eval(&block)
@@ -52,11 +50,9 @@ module Capcoauth
                   :perform_login_redirects,
                   :token_verify_ttl,
                   :capcoauth_url,
-                  :user_id_field,
                   :cache_store,
                   :user_resolver,
                   :require_user,
-                  :send_notifications,
                   :logout_method
 
     def client_id

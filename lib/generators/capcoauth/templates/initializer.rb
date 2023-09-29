@@ -22,9 +22,6 @@ Capcoauth.configure do |config|
   # Configure the logger to use for OAuth events
   config.logger = Rails.logger
 
-  # Configure which ID to identify the user by.  Valid options are :capcoauth, :capco (4-letter), :psoft, :e_number, and :cit
-  # config.user_id_field = :capcoauth
-
   # Block to resolve your user from the provided CapcOAuth ID.  If you're using different primary keys than any of the
   # existing services, you might consider looking up by an external ID, e.g. `User.find_by_psoft_id! capcoauth_user_id`
   config.user_resolver = -> capcoauth_user_id {
@@ -42,10 +39,6 @@ Capcoauth.configure do |config|
   # Don't redirect to last URL on login since we don't want to see API responses
   # config.perform_login_redirects = true
 
-  # Send push notifications (good to make this dependent on your environment)
-  # config.send_notifications = true
-
   # HTTP method to be used for logout (available options are :GET, :PUT, :PATCH, :POST, :DELETE)
-  # TODO: :POST should be used if possible, this is :GET by default because it would introduce a breaking change
-  # config.logout_method = :GET
+  # config.logout_method = :POST
 end

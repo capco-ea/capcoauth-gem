@@ -12,7 +12,7 @@ module Capcoauth
       end
 
       # If request JSON, just return the url in a JSON hash
-      logout_url = "#{Capcoauth.configuration.capcoauth_url}/users/sign_out"
+      logout_url = "#{Capcoauth.configuration.capcoauth_url}/logout"
       if request.format.json? || request.format.api_json?
         render json: { logout_url: logout_url }
       else
@@ -35,8 +35,9 @@ module Capcoauth
     def revoke_token(token)
       Capcoauth.configuration.logger.info("Dispatching token revoke request for token #{token[0...5]}...#{token[-5..-1]}")
       auth_value = Base64.encode64("#{Capcoauth.configuration.client_id}:#{Capcoauth.configuration.client_secret}").squish
-      http = Net::HTTP.new('capcoauth.capco.com', 443)
-      http.use_ssl = true
+      uri = URI.parse(Capcoauth.configuration.capcoauth_url)
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true # Just going hardcode this to true since we definitely shouldn't be hitting this endpoint without TLS
       req = Net::HTTP::Post.new('/oauth/revoke', {
         'Authorization' => "Basic #{auth_value}",
         'Content-Type' => 'application/json',
