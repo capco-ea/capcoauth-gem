@@ -14,11 +14,11 @@ module Capcoauth
 
         # Call OAuth Service
         begin
-          response = ::HTTParty.get("#{Capcoauth.configuration.capcoauth_url}/oauth/token/info", {
+          response = ::HTTParty.get("#{Capcoauth.configuration.capcoauth_backend_url}/oauth/token/info", {
             timeout: 5,
             headers: {
               :'Authorization' => "Bearer #{access_token.token}",
-              :'X-Forwarded-Proto' => Capcoauth.configuration.force_https_requests ? 'https' : nil,
+              :'X-Forwarded-Proto' => Capcoauth.configuration.force_backend_https_requests ? 'https' : nil,
             }.compact
           })
         rescue SocketError, Net::OpenTimeout

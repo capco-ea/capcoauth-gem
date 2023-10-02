@@ -169,6 +169,17 @@ describe Capcoauth::Config do
     end
   end
 
+  describe 'capcoauth_backend_url' do
+    it "has value #{Capcoauth::Config::CAPCOAUTH_URL_DEFAULT} by default" do
+      expect(subject.capcoauth_backend_url).to eq(Capcoauth::Config::CAPCOAUTH_URL_DEFAULT)
+    end
+    it 'can be updated to other value' do
+      subject.capcoauth_backend_url = 'https://example.com'
+      expect(subject.capcoauth_backend_url).to eq('https://example.com')
+      subject.capcoauth_backend_url = Capcoauth::Config::CAPCOAUTH_URL_DEFAULT
+    end
+  end
+
   describe 'cache_store' do
     before do
       @cache_store = subject.cache_store

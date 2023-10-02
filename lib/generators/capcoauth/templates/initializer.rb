@@ -16,8 +16,9 @@ Capcoauth.configure do |config|
   # Configure a cache store to use to cache access token resolutions.
   # config.cache_store = ActiveSupport::Cache::MemoryStore.new
 
-  # CapcOAuth service URL
+  # CapcOAuth service URLs
   # config.capcoauth_url = ENV['CAPCOAUTH_URL']
+  # config.capcoauth_backend_url = ENV['CAPCOAUTH_BACKEND_URL']
 
   # Configure the logger to use for OAuth events
   config.logger = Rails.logger
@@ -39,8 +40,8 @@ Capcoauth.configure do |config|
   # HTTP method to be used for logout (available options are :GET, :PUT, :PATCH, :POST, :DELETE)
   # config.logout_method = :POST
 
-  # Use this option if you want to send requests to the OAuth server with `X-Forwareded-Proto: https` header. This needs
+  # Use this option if you want to send requests to the OAuth server with `X-Forwarded-Proto: https` header. This needs
   # to be done in k8s between services on the same cluster where transmission is encrypted, but the service itself is
   # not TLS-terminated
-  # config.force_https_requests = false
+  # config.force_backend_https_requests = false
 end
