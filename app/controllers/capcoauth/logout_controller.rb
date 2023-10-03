@@ -42,9 +42,10 @@ module Capcoauth
       # if communication is not encrypted.
       http.use_ssl = !Capcoauth.configuration.force_backend_https_requests
       req = Net::HTTP::Post.new('/oauth/revoke', {
-        'Authorization' => "Basic #{auth_value}",
-        'Content-Type' => 'application/json',
-        'X-Forwarded-Proto' => Capcoauth.configuration.force_backend_https_requests ? 'https' : nil,
+        'Authorization': "Basic #{auth_value}",
+        'Content-Type': 'application/json',
+        'X-Forwarded-Proto': Capcoauth.configuration.force_backend_https_requests ? 'https' : nil,
+        'Host': Capcoauth.configuration.force_backend_host_header,
       }.compact)
       req.body = { token: token }.to_json
       res = http.request(req)

@@ -33,6 +33,7 @@ module Capcoauth
         @config.token_verify_ttl = TOKEN_VERIFY_TTL_DEFAULT
         @config.capcoauth_url = CAPCOAUTH_URL_DEFAULT
         @config.capcoauth_backend_url = CAPCOAUTH_URL_DEFAULT
+        @config.force_backend_host_header = nil
         @config.cache_store = ::ActiveSupport::Cache::MemoryStore.new
         @config.require_user = true
         @config.logout_method = :POST
@@ -53,6 +54,7 @@ module Capcoauth
                   :token_verify_ttl,
                   :capcoauth_url,
                   :capcoauth_backend_url,
+                  :force_backend_host_header,
                   :cache_store,
                   :user_resolver,
                   :require_user,

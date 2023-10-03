@@ -39,4 +39,8 @@ Capcoauth.configure do |config|
   # to be done in k8s between services on the same cluster where transmission is encrypted, but the service itself is
   # not TLS-terminated
   # config.force_backend_https_requests = false
+
+  # Use this option if the OAuth service responds with forbidden if it doesn't receive the HTTP Host header it's
+  # expecting.
+  # config.force_backend_host_header = nil
 end

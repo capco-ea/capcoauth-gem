@@ -16,7 +16,8 @@ module Capcoauth
           redirect_uri: oauth_callback_url
         },
         headers: {
-          'X-Forwarded-Proto' => Capcoauth.configuration.force_backend_https_requests ? 'https' : nil,
+          'X-Forwarded-Proto': Capcoauth.configuration.force_backend_https_requests ? 'https' : nil,
+          'Host': Capcoauth.configuration.force_backend_host_header,
         }.compact
       })
 

@@ -17,8 +17,9 @@ module Capcoauth
           response = ::HTTParty.get("#{Capcoauth.configuration.capcoauth_backend_url}/oauth/token/info", {
             timeout: 5,
             headers: {
-              :'Authorization' => "Bearer #{access_token.token}",
-              :'X-Forwarded-Proto' => Capcoauth.configuration.force_backend_https_requests ? 'https' : nil,
+              'Authorization': "Bearer #{access_token.token}",
+              'X-Forwarded-Proto': Capcoauth.configuration.force_backend_https_requests ? 'https' : nil,
+              'Host': Capcoauth.configuration.force_backend_host_header,
             }.compact
           })
         rescue SocketError, Net::OpenTimeout
