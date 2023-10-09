@@ -25,7 +25,7 @@ module Capcoauth
         redirect_uri: oauth_callback_url,
         response_type: 'code',
       }
-      redirect_to "#{Capcoauth.configuration.capcoauth_url}/oauth/authorize?#{params.to_param}"
+      redirect_to "#{Capcoauth.configuration.capcoauth_url}/oauth/authorize?#{params.to_param}", allow_other_host: true
     end
   end
 end

@@ -16,7 +16,7 @@ module Capcoauth
       if request.format.json? || request.format.api_json?
         render json: { logout_url: logout_url }
       else
-        redirect_to logout_url, notice: 'You have been logged out'
+        redirect_to logout_url, notice: 'You have been logged out', allow_other_host: true
       end
     end
 
