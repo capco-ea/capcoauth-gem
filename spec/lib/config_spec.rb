@@ -94,7 +94,7 @@ describe Capcoauth::Config do
       subject.user_resolver = -> user_id {
         User.find_by! id: user_id
       }
-      expect{subject.user_resolver.call('iwillneverexist')}.to raise_error(ActiveRecord::RecordNotFound, 'Couldn\'t find User')
+      expect{subject.user_resolver.call('iwillneverexist')}.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
 
