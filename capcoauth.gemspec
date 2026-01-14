@@ -15,12 +15,12 @@ Gem::Specification.new do |s|
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- spec/*`.split("\n")
   s.require_paths = ['lib']
-  
+
   s.required_ruby_version = '>= 2.1'
 
   s.add_dependency 'railties', '>= 4.2'
   s.add_dependency 'activesupport', '>= 3.0'
-  s.add_dependency 'httparty', '~> 0.21.0'
+  s.add_dependency 'httparty', '~> 0.24.0'
   s.add_dependency 'csv'
 
   s.add_development_dependency 'database_cleaner', '~> 2.0.1'
