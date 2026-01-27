@@ -16,15 +16,7 @@ Gem::Specification.new do |s|
   s.test_files    = `git ls-files -- spec/*`.split("\n")
   s.require_paths = ['lib']
 
-  s.required_ruby_version = '>= 2.1'
+  s.required_ruby_version = '>= 3'
 
-  s.add_dependency 'rails', '< 8'
   s.add_dependency 'httparty', '~> 0.24.2'
-  s.add_dependency 'csv'
-
-  s.add_development_dependency 'database_cleaner', '>= 2', '< 3'
-  s.add_development_dependency 'generator_spec', '~> 0.10.0'
-  s.add_development_dependency 'rake', '>= 13', '< 14'
-  s.add_development_dependency 'rspec-rails', '>= 8', '< 9'
-  s.add_development_dependency 'timecop', '~> 0.9.10'
 end

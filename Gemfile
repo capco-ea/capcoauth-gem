@@ -1,9 +1,16 @@
 source 'https://rubygems.org'
 
-gem 'simplecov', require: false, group: :test
-
-gem 'activerecord-jdbcsqlite3-adapter', platform: :jruby
-gem 'sqlite3', platform: [:ruby, :mswin, :mingw, :x64_mingw]
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw]
+group :development, :test do
+  gem 'rails', '< 8'
+  gem 'simplecov', require: false
+  gem 'database_cleaner', '>= 2', '< 3'
+  gem 'generator_spec', '~> 0.10.0'
+  gem 'rake', '>= 13', '< 14'
+  gem 'rspec-rails', '>= 8', '< 9'
+  gem 'timecop', '~> 0.9.10'
+  gem 'activerecord-jdbcsqlite3-adapter', platform: :jruby
+  gem 'sqlite3', platform: [:ruby, :windows]
+  gem 'tzinfo-data', platforms: [:windows]
+end
 
 gemspec
