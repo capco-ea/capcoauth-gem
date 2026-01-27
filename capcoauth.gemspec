@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
 
   s.required_ruby_version = '>= 2.1'
 
-  s.add_dependency 'rails', '< 9'
+  s.add_dependency 'rails', '< 8'
   s.add_dependency 'httparty', '~> 0.24.2'
   s.add_dependency 'csv'
 
