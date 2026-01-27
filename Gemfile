@@ -1,7 +1,5 @@
 source 'https://rubygems.org'
 
-gem 'rails', '~> 8.1.2'
-
 gem 'simplecov', require: false, group: :test
 
 gem 'activerecord-jdbcsqlite3-adapter', platform: :jruby
